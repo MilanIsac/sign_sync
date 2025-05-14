@@ -1,48 +1,37 @@
 signsync/
-├── signsync_backend/                   # Django backend
-│   ├── signsync/                      # Django project settings
-│   │   ├── __init__.py
-│   │   ├── asgi.py
-│   │   ├── settings.py                # Django settings (PostgreSQL, Celery, REST Framework)
-│   │   ├── urls.py                   # Root URL routing
-│   │   └── wsgi.py
-│   ├── meetings/                      # Django app for meeting and translation logic
-│   │   ├── __init__.py
-│   │   ├── admin.py                  # Admin panel configuration
-│   │   ├── apps.py
-│   │   ├── migrations/               # Database migrations
-│   │   ├── models.py                 # Models (Meeting, Translation)
-│   │   ├── forms.py                  # Forms (MeetingForm)
-│   │   ├── views.py                  # Views (meeting creation, video processing)
-│   │   ├── urls.py                   # App-specific URL routing
-│   │   ├── tasks.py                  # Celery tasks for video processing
-│   │   └── serializers.py            # DRF serializers for API
-│   ├── requirements.txt              # Python dependencies
-│   └── manage.py                     # Django management script
-├── signsync_frontend/                 # React frontend
-│   ├── public/                       # Static assets
-│   │   ├── index.html                # Root HTML file
+├── signsync_backend/                   # Flask backend
+│   ├── app.py                         # Main Flask application(initialization routes)
+│   ├── models.py                      # SQLAlchemy models (User, Meeting, Translation)
+│   ├── tasks.py                       # Celery tasks for video processing
+│   ├── api.py                         # Flask-RESTful API resources
+│   ├── config.py                      # Configuration (database, Celery, etc.)
+│   ├── requirements.txt               Ascending/descending order
+│   └── instance/                      # Instance folder for sensitive data
+│       └── config.py                  # Sensitive config (e.g., database credentials)
+├── signsync_frontend/                 # React frontend (unchanged)
+│   ├── public/
+│   │   ├── index.html
 │   │   ├── favicon.ico
 │   │   └── manifest.json
-│   ├── src/                          # React source code
-│   │   ├── components/               # Reusable React components
-│   │   │   ├── MeetingForm.js        # Form for creating meetings
-│   │   │   ├── VideoConference.js    # Video conferencing UI with WebRTC
-│   │   │   └── TranslationOutput.js  # Displays text/audio output
-│   │   ├── pages/                    # Page components
-│   │   │   ├── Home.js               # Landing page
-│   │   │   ├── CreateMeeting.js      # Meeting creation page
-│   │   │   └── MeetingDetail.js      # Meeting video conference page
-│   │   ├── styles/                   # Custom CSS
-│   │   │   └── App.css               # Global styles
-│   │   ├── App.js                    # Root React component
-│   │   ├── index.js                  # React entry point
-│   │   └── api.js                    # API client for backend communication
-│   ├── package.json                  # Node dependencies (React, PeerJS, axios)
-│   └── .env                          # Environment variables (API URL)
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── MeetingForm.js
+│   │   │   ├── VideoConference.js
+│   │   │   └── TranslationOutput.js
+│   │   ├── pages/
+│   │   │   ├── Home.js
+│   │   │   ├── CreateMeeting.js
+│   │   │   └── MeetingDetail.js
+│   │   ├── styles/
+│   │   │   └── App.css
+│   │   ├── App.js
+│   │   ├── index.js
+│   │   └── api.js
+│   ├── package.json
+│   └── .env
 ├── ml_model/                         # ML model and scripts
 │   ├── sign_language_model.h5        # Pre-trained TensorFlow model
 │   └── process_video.py              # Script for OpenCV/MediaPipe processing
 ├── README.md                         # Project documentation
 ├── .gitignore                        # Git ignore file
-└── docker-compose.yml                # Optional: Docker setup for deployment
+└── docker-compose.yml                # Optional: Docker setup
