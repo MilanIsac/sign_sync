@@ -1,36 +1,42 @@
-# signsync_backend/api.py
 from flask_restful import Resource, reqparse
-from flask import request
-from models import Meeting, Translation, User
 from app import db
-from tasks import process_video_feed
+from models import Meeting, Translation
+from tasks import process_video_task
 
-meeting_parser = reqparse.RequestParser()
-meeting_parser.add_argument('title', type=str, required=True, help='Title is required')
+class MeetingListResource(Resource):
+    def get(self):
+        meetings = Meeting.query.all()
+        return [meeting.to_dict() for meeting in meetings], 200
 
-class MeetingResource(Resource):
     def post(self):
-        args = meeting_parser.parse_args()
-        # For simplicity, use first user (implement authentication later)
-        user = User.query.first() or User(username='test', password='test')
-        if not User.query.first():
-            db.session.add(user)
-            db.session.commit()
-        meeting = Meeting(title=args['title'], host_id=user.id)
+        parser = reqparse.RequestParser()
+        parser.add_argument('title', type=str, required=True, help='Title is required')
+        args = parser.parse_args()
+
+        meeting = Meeting(title=args['title'])
         db.session.add(meeting)
         db.session.commit()
+
         return meeting.to_dict(), 201
 
-class ProcessSignLanguageResource(Resource):
+class MeetingResource(Resource):
+    def get(self, meeting_id):
+        meeting = Meeting.query.get_or_404(meeting_id)
+        return meeting.to_dict(), 200
+
+class ProcessVideoResource(Resource):
     def post(self, meeting_id):
-        if 'video' not in request.files:
-            return {'error': 'No video file provided'}, 400
-        video_file = request.files['video']
-        video_path = f'temp_{meeting_id}.mp4'
-        video_file.save(video_path)
-        # Use first user for simplicity
-        user = User.query.first()
-        if not user:
-            return {'error': 'No user found'}, 400
-        task = process_video_feed.delay(video_path, meeting_id, user.id)
-        return {'task_id': task.id}, 202
+        # Verify meeting exists
+        meeting = Meeting.query.get_or_404(meeting_id)
+
+        # In production, handle file upload here
+        # For now, simulate with a placeholder video path
+        video_path = "../datasets/wlasl_kaggle/hello/00428.mp4"
+
+        # Trigger Celery task for video processing
+        result = process_video_task.delay(meeting_id, video_path)
+
+        # Wait for the task to complete (for simplicity; in production, use a callback)
+        translation = result.get(timeout=60)
+
+        return {'translation': translation}, 200

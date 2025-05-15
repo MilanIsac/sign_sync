@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignSync Video Conference</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="main-container">
+            <h1 class="title">SignSync Video Conference</h1>
+
+            <!-- Error Message -->
+            <div id="error-message" class="error-message"></div>
+
+            <!-- Create Meeting Section -->
+            <div class="create-meeting-container">
+                <h2 class="subtitle">Create a New Meeting</h2>
+                <div class="form-group">
+                    <input type="text" id="meeting-title" class="form-input" placeholder="Enter meeting title">
+                    <button id="create-meeting-btn" class="submit-btn">Create</button>
+                </div>
+            </div>
+
+            <!-- Meetings List -->
+            <h2 class="meetings-heading">Meetings</h2>
+            <p id="no-meetings" class="no-meetings" style="display: none;">No meetings available. Create one to get started.</p>
+            <ul id="meeting-list" class="meeting-list"></ul>
+
+            <!-- Video Upload Section -->
+            <div id="video-section" class="video-section">
+                <h3 id="video-section-title" class="subtitle"></h3>
+                <div class="upload-group">
+                    <input type="file" id="video-input" class="upload-input" accept="video/*">
+                    <button id="process-btn" class="process-btn">Upload & Process</button>
+                </div>
+                <div id="translation-container" class="translation-container" style="display: none;">
+                    <h3 class="subtitle">Translation</h3>
+                    <p id="translation-text" class="translation-text"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
