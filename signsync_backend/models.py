@@ -4,7 +4,7 @@ from datetime import datetime
 class Meeting(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now())
     translations = db.relationship('Translation', backref='meeting', lazy=True)
 
     def to_dict(self):

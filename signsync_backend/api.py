@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
 from app import db
-from models import Meeting, Translation
+from models import Meeting, Translation  # Import models here
 from tasks import process_video_task
 
 class MeetingListResource(Resource):

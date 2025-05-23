@@ -2,7 +2,7 @@ import json
 import numpy as np
 from tensorflow.keras.models import load_model
 from app import celery, db
-from models import Translation
+from models import Translation  # Import here
 
 # Load the ML model and label map
 sign_model = load_model('../ml_model/sign_language_model.h5')
